@@ -1,0 +1,20 @@
+{
+  "name": "gae-env-loader",
+  "version": "0.0.1",
+  "description": "Load your env variables from google secret manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@google-cloud/secret-manager": "^3.10.1",
+    "dotenv": "^10.0.0"
+  }
+}
