@@ -17,5 +17,8 @@
   "dependencies": {
     "@google-cloud/secret-manager": "^3.10.1",
     "dotenv": "^10.0.0"
+  },
+  "bin": {
+    "gae-env-loader": "./dist/cli.js"
   }
 }
