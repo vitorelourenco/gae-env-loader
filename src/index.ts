@@ -35,6 +35,7 @@ export async function loadSecrets(prioritizeLocal: boolean = true) {
     }
   } catch (err) {
     console.error(err);
+    throw err;
   }
 }
 

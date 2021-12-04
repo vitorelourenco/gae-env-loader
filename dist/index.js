@@ -112,7 +112,7 @@ function loadSecrets(prioritizeLocal) {
                 case 4:
                     err_1 = _g.sent();
                     console.error(err_1);
-                    return [3, 5];
+                    throw err_1;
                 case 5: return [2];
             }
         });

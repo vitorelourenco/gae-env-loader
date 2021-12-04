@@ -1,6 +1,6 @@
 {
   "name": "gae-env-loader",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Load your env variables from google secret manager",
   "main": "dist/index.js",
   "repository": {
