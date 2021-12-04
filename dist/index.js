@@ -35,12 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
 exports.loadSecrets = exports.accessSecretVersion = exports.listSecrets = void 0;
-var dotenv_1 = __importDefault(require("dotenv"));
 var secret_manager_1 = require("@google-cloud/secret-manager");
 function listSecrets(request) {
     return __awaiter(this, void 0, void 0, function () {
@@ -70,7 +66,6 @@ function accessSecretVersion(name) {
     });
 }
 exports.accessSecretVersion = accessSecretVersion;
-var client = new secret_manager_1.SecretManagerServiceClient();
 function loadSecrets(prioritizeLocal) {
     var _a, _b, _c, _d, _e;
     if (prioritizeLocal === void 0) { prioritizeLocal = true; }
@@ -79,11 +74,9 @@ function loadSecrets(prioritizeLocal) {
         return __generator(this, function (_g) {
             switch (_g.label) {
                 case 0:
-                    gcpProjectId = (function () {
-                        if (!process.env.GOOGLE_CLOUD_PROJECT)
-                            dotenv_1["default"].config();
-                        return process.env.GOOGLE_CLOUD_PROJECT;
-                    })();
+                    gcpProjectId = process.env.GOOGLE_CLOUD_PROJECT;
+                    if (!gcpProjectId)
+                        throw new Error("GCP Project ID is expected to be found at process.env.GOOGLE_CLOUD_PROJECT");
                     _g.label = 1;
                 case 1:
                     _g.trys.push([1, 4, , 5]);
@@ -94,11 +87,11 @@ function loadSecrets(prioritizeLocal) {
                     for (_i = 0, secrets_1 = secrets; _i < secrets_1.length; _i++) {
                         secret = secrets_1[_i];
                         if (!secret.name)
-                            throw new Error("Expected value for secret: " + secret.name);
+                            throw new Error("Expected a name for secret: " + secret.name);
                         key = (_b = (_a = secret.name) === null || _a === void 0 ? void 0 : _a.split("/")) === null || _b === void 0 ? void 0 : _b[3];
                         if (!key)
-                            throw new Error("Expected key for secret: " + secret);
-                        if (prioritizeLocal && process.env[key])
+                            throw new Error("Expected a key for secret: " + secret);
+                        if (prioritizeLocal && process.env.hasOwnProperty(key))
                             continue;
                         promises.push(accessSecretVersion(secret.name + "/versions/latest"));
                     }
@@ -109,9 +102,9 @@ function loadSecrets(prioritizeLocal) {
                         version = versions_1[_f];
                         key = (_d = (_c = version.name) === null || _c === void 0 ? void 0 : _c.split("/")) === null || _d === void 0 ? void 0 : _d[3];
                         if (!key)
-                            throw new Error("Expected key for version: " + version);
-                        if (!((_e = version === null || version === void 0 ? void 0 : version.payload) === null || _e === void 0 ? void 0 : _e.data))
-                            throw new Error("Expected value for version: " + version.name);
+                            throw new Error("Expected a key for version: " + version);
+                        if (((_e = version === null || version === void 0 ? void 0 : version.payload) === null || _e === void 0 ? void 0 : _e.data) == null)
+                            throw new Error("Expected a value for version: " + version.name);
                         value = version.payload.data.toString();
                         process.env[key] = value;
                     }
@@ -126,4 +119,5 @@ function loadSecrets(prioritizeLocal) {
     });
 }
 exports.loadSecrets = loadSecrets;
+var client = new secret_manager_1.SecretManagerServiceClient();
 //# sourceMappingURL=index.js.map
