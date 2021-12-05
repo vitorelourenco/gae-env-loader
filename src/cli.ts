@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 
 (async () => {
-  const { parsed } = dotenv.config() || {};
+  const { parsed } = dotenv.config() || { parsed: {} };
   const newSecrets = await loadSecrets();
   const newDotEnv = Object.assign(parsed, newSecrets);
   const keys = Object.keys(newDotEnv);

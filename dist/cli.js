@@ -48,7 +48,7 @@ var fs_1 = __importDefault(require("fs"));
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                parsed = (dotenv_1["default"].config() || {}).parsed;
+                parsed = (dotenv_1["default"].config() || { parsed: {} }).parsed;
                 return [4, (0, index_1.loadSecrets)()];
             case 1:
                 newSecrets = _a.sent();
