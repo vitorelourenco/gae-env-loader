@@ -1,6 +1,6 @@
 {
   "name": "gae-env-loader",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Load your env variables from google secret manager",
   "main": "dist/index.js",
   "repository": {
@@ -19,7 +19,8 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "@google-cloud/secret-manager": "^3.10.1"
+    "@google-cloud/secret-manager": "^3.10.1",
+    "dotenv": "^10.0.0"
   },
   "bin": {
     "gae-env-loader": "./dist/cli.js"

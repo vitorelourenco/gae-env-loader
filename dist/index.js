@@ -70,7 +70,7 @@ function loadSecrets(prioritizeLocal) {
     var _a, _b, _c, _d, _e;
     if (prioritizeLocal === void 0) { prioritizeLocal = true; }
     return __awaiter(this, void 0, void 0, function () {
-        var gcpProjectId, secrets, promises, _i, secrets_1, secret, key, versions, _f, versions_1, version, key, value, err_1;
+        var gcpProjectId, secrets, promises, _i, secrets_1, secret, key, versions, newSecrets, _f, versions_1, version, key, value, err_1;
         return __generator(this, function (_g) {
             switch (_g.label) {
                 case 0: return [4, client.getProjectId()];
@@ -99,6 +99,7 @@ function loadSecrets(prioritizeLocal) {
                     return [4, Promise.all(promises)];
                 case 4:
                     versions = _g.sent();
+                    newSecrets = {};
                     for (_f = 0, versions_1 = versions; _f < versions_1.length; _f++) {
                         version = versions_1[_f];
                         key = (_d = (_c = version.name) === null || _c === void 0 ? void 0 : _c.split("/")) === null || _d === void 0 ? void 0 : _d[3];
@@ -108,8 +109,9 @@ function loadSecrets(prioritizeLocal) {
                             throw new Error("Expected a value for version: " + version.name);
                         value = version.payload.data.toString();
                         process.env[key] = value;
+                        newSecrets[key] = value;
                     }
-                    return [3, 6];
+                    return [2, newSecrets];
                 case 5:
                     err_1 = _g.sent();
                     console.error(err_1);
