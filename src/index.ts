@@ -11,8 +11,8 @@ export async function accessSecretVersion(name: string) {
 }
 
 export async function loadSecrets(prioritizeLocal: boolean = true) {
-  const gcpProjectId = process.env.GOOGLE_CLOUD_PROJECT;
-  if(!gcpProjectId) throw new Error("GCP Project ID is expected to be found at process.env.GOOGLE_CLOUD_PROJECT")
+  const gcpProjectId = await client.getProjectId();
+  if(!gcpProjectId) throw new Error("Failed to retrieve Project Id. Check if youre authenticated.")
   try {
     const secrets = await listSecrets({ parent: "projects/" + gcpProjectId });
     const promises = [];
@@ -33,6 +33,7 @@ export async function loadSecrets(prioritizeLocal: boolean = true) {
       const value = version.payload.data.toString();
       process.env[key] = value;
     }
+    console.log(process.env);
   } catch (err) {
     console.error(err);
     throw err;
