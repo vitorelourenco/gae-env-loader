@@ -73,15 +73,16 @@ function loadSecrets(prioritizeLocal) {
         var gcpProjectId, secrets, promises, _i, secrets_1, secret, key, versions, _f, versions_1, version, key, value, err_1;
         return __generator(this, function (_g) {
             switch (_g.label) {
-                case 0:
-                    gcpProjectId = process.env.GOOGLE_CLOUD_PROJECT;
-                    if (!gcpProjectId)
-                        throw new Error("GCP Project ID is expected to be found at process.env.GOOGLE_CLOUD_PROJECT");
-                    _g.label = 1;
+                case 0: return [4, client.getProjectId()];
                 case 1:
-                    _g.trys.push([1, 4, , 5]);
-                    return [4, listSecrets({ parent: "projects/" + gcpProjectId })];
+                    gcpProjectId = _g.sent();
+                    if (!gcpProjectId)
+                        throw new Error("Failed to retrieve Project Id. Check if youre authenticated.");
+                    _g.label = 2;
                 case 2:
+                    _g.trys.push([2, 5, , 6]);
+                    return [4, listSecrets({ parent: "projects/" + gcpProjectId })];
+                case 3:
                     secrets = _g.sent();
                     promises = [];
                     for (_i = 0, secrets_1 = secrets; _i < secrets_1.length; _i++) {
@@ -96,7 +97,7 @@ function loadSecrets(prioritizeLocal) {
                         promises.push(accessSecretVersion(secret.name + "/versions/latest"));
                     }
                     return [4, Promise.all(promises)];
-                case 3:
+                case 4:
                     versions = _g.sent();
                     for (_f = 0, versions_1 = versions; _f < versions_1.length; _f++) {
                         version = versions_1[_f];
@@ -108,12 +109,13 @@ function loadSecrets(prioritizeLocal) {
                         value = version.payload.data.toString();
                         process.env[key] = value;
                     }
-                    return [3, 5];
-                case 4:
+                    console.log(process.env);
+                    return [3, 6];
+                case 5:
                     err_1 = _g.sent();
                     console.error(err_1);
                     throw err_1;
-                case 5: return [2];
+                case 6: return [2];
             }
         });
     });
