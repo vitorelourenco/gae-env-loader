@@ -33,7 +33,6 @@ export async function loadSecrets(prioritizeLocal: boolean = true) {
       const value = version.payload.data.toString();
       process.env[key] = value;
     }
-    console.log(process.env);
   } catch (err) {
     console.error(err);
     throw err;

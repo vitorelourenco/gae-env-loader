@@ -109,7 +109,6 @@ function loadSecrets(prioritizeLocal) {
                         value = version.payload.data.toString();
                         process.env[key] = value;
                     }
-                    console.log(process.env);
                     return [3, 6];
                 case 5:
                     err_1 = _g.sent();
