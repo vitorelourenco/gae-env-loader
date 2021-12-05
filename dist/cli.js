@@ -48,7 +48,20 @@ var fs_1 = __importDefault(require("fs"));
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                parsed = (dotenv_1["default"].config() || { parsed: {} }).parsed;
+                parsed = (function () {
+                    try {
+                        var envsRead = dotenv_1["default"].config();
+                        var parsed_1 = envsRead === null || envsRead === void 0 ? void 0 : envsRead.parsed;
+                        if (!parsed_1)
+                            throw new Error("Can't parse .env or .env does not exist");
+                        return parsed_1;
+                    }
+                    catch (err) {
+                        console.info(err === null || err === void 0 ? void 0 : err.message);
+                        console.log("This is an optional. Having a .env file is not required");
+                        return {};
+                    }
+                })();
                 return [4, (0, index_1.loadSecrets)()];
             case 1:
                 newSecrets = _a.sent();
